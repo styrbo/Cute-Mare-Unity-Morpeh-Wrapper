@@ -1,0 +1,9 @@
+{
+  "name": "com.styrbo.cutemarewrapper",
+  "displayName": "CuteMare",
+  "version": "1.0.0",
+  "unity": "2018.2",
+  "description": "wrapper for morpeh ECS framework",
+  "dependencies": {
+  }
+}
