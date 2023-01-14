@@ -1,6 +1,6 @@
 using Scellecs.Morpeh;
 
-namespace CuteMareMorpeh
+namespace CuteMareMorpeh.OneFrame
 {
     public interface IOneFrameComponent : IComponent
     {

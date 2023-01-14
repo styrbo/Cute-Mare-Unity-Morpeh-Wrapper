@@ -7,13 +7,13 @@ using Scellecs.Morpeh.Systems;
 using Unity.IL2CPP.CompilerServices;
 using UnityEngine;
 
-namespace CuteMareMorpeh
+namespace CuteMareMorpeh.OneFrame
 {
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
     [CreateAssetMenu(menuName = "ECS/Systems/" + nameof(OneFrameCleanupSystem))]
-    public sealed class OneFrameCleanupSystem : CleanupSystem
+    internal sealed class OneFrameCleanupSystem : CleanupSystem
     {
 
         private FastList<Type> _oneFrameComponentTypes;
