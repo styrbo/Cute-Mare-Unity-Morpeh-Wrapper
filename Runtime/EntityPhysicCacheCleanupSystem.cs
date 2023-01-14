@@ -10,8 +10,8 @@ namespace CuteMareMorpeh
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-    [CreateAssetMenu(menuName = "ECS/Systems/" + nameof(EntityCacheCleanupSystem))]
-    internal class EntityCacheCleanupSystem : CleanupSystem
+    [CreateAssetMenu(menuName = "ECS/Systems/" + nameof(EntityPhysicCacheCleanupSystem))]
+    internal class EntityPhysicCacheCleanupSystem : FixedUpdateSystem
     {
         public override void OnAwake()
         {
