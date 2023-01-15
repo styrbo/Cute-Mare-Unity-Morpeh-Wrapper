@@ -11,8 +11,9 @@ namespace CuteMareMorpeh.UnityRelatedComponents
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-    public struct GameObjectComponent : IComponent
+    public struct GameObjectReferencesComponent : IComponent
     {
         public GameObject GameObject;
+        public Rigidbody Rigidbody;
     }
 }

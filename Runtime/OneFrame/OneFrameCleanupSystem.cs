@@ -46,7 +46,7 @@ namespace CuteMareMorpeh.OneFrame
                 _stashes.Add(World.GetReflectionStash(type));
             }
 
-            foreach (var entity in World.Filter.With<GameObjectComponent>())
+            foreach (var entity in World.Filter.With<GameObjectReferencesComponent>())
             {
                 foreach (var stash in _stashes)
                 {

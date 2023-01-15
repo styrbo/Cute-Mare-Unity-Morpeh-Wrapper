@@ -1,4 +1,5 @@
 using CuteMareMorpeh.UnityRelatedComponents;
+using JetBrains.Annotations;
 using Scellecs.Morpeh;
 using Scellecs.Morpeh.Collections;
 using Scellecs.Morpeh.Providers;
@@ -6,7 +7,6 @@ using UnityEngine;
 
 namespace CuteMareMorpeh
 {
-    
     [RequireComponent(typeof(EntityProvider))]
     public class Entity : EntityProvider
     {
@@ -20,28 +20,51 @@ namespace CuteMareMorpeh
 
         protected override void Initialize()
         {
-            _onTriggerEnterColliders = new FastList<Collider>(2); 
-            
+            _onTriggerEnterColliders = new FastList<Collider>(2);
+
             base.Initialize();
-            
-            Entity.GetComponent<GameObjectComponent>(out var exist);
-            
-            if(exist)
+
+            Entity.GetComponent<GameObjectReferencesComponent>(out var exist);
+
+            if (exist)
                 return;
-            
-            Entity.AddComponent<GameObjectComponent>();
-            var stash = World.Default.GetStash<GameObjectComponent>();
-            
-            stash.Set(Entity, new GameObjectComponent()
+
+            Entity.AddComponent<GameObjectReferencesComponent>();
+
+            var rb = CreateRbComponent();
+
+            var stash = World.Default.GetStash<GameObjectReferencesComponent>();
+
+            stash.Set(Entity, new GameObjectReferencesComponent()
             {
                 GameObject = gameObject,
+                Rigidbody = rb,
             });
         }
-        
+
+        [CanBeNull]
+        private Rigidbody CreateRbComponent()
+        {
+            var rb = GetComponent<Rigidbody>();
+
+            if (rb == null)
+                return null;
+
+            var stash = World.Default.GetStash<PhysicBody>();
+
+            stash.Set(Entity, new PhysicBody()
+            {
+                Position = rb.position,
+                Rotation = rb.rotation,
+            });
+
+            return rb;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             _onTriggerEnterColliders.Add(other);
-            
+
             var stash = World.Default.GetStash<TriggerEnterCollisions>();
 
             stash.Set(Entity, new TriggerEnterCollisions
