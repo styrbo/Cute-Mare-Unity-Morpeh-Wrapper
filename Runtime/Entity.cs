@@ -61,18 +61,6 @@ namespace CuteMareMorpeh
             return rb;
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            _onTriggerEnterColliders.Add(other);
-
-            var stash = World.Default.GetStash<TriggerEnterCollisions>();
-
-            stash.Set(Entity, new TriggerEnterCollisions
-            {
-                contacts = _onTriggerEnterColliders,
-            });
-        }
-
         private void OnDestroy()
         {
             World.Default.RemoveEntity(Entity);

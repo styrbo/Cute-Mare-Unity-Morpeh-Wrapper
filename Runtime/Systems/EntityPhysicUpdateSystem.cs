@@ -16,7 +16,6 @@ namespace CuteMareMorpeh.Systems
     {
         public override void OnAwake()
         {
-            
         }
 
         public override void OnUpdate(float deltaTime)
@@ -27,27 +26,33 @@ namespace CuteMareMorpeh.Systems
             {
                 ref var gameObject = ref entity.GetComponent<GameObjectReferencesComponent>();
                 ref var physicBody = ref entity.GetComponent<PhysicBody>();
-                
-                if(gameObject.Rigidbody.position != physicBody.Position)
+
+                if (entity.Has<PhysicBodyPathTracerComponent>())
+                {
+                    ref var pathTracerComponent = ref entity.GetComponent<PhysicBodyPathTracerComponent>();
+
+                    pathTracerComponent.PreviewFramePosition = gameObject.Rigidbody.position;
+                }
+
+                if (gameObject.Rigidbody.position != physicBody.Position)
                     gameObject.Rigidbody.MovePosition(physicBody.Position);
-                
-                if(gameObject.Rigidbody.rotation != physicBody.Rotation)
+
+                if (gameObject.Rigidbody.rotation != physicBody.Rotation)
                     gameObject.Rigidbody.MoveRotation(physicBody.Rotation);
             }
+
             Profiler.EndSample();
-     
+
             Profiler.BeginSample("cleanup collisions cache");
             //cleanup trigger cache
-            foreach (var entity in World.Filter.With<TriggerEnterCollisions>())
+            foreach (var entity in World.Filter.With<PhysicBodyPathTracerComponent>())
             {
-                ref var triggerEnterCollisions = ref entity.GetComponent<TriggerEnterCollisions>(out var hasTriggerEnterCollisions);
-                
-                if (hasTriggerEnterCollisions)
-                {
-                    triggerEnterCollisions.contacts.Clear();
-                    entity.RemoveComponent<TriggerEnterCollisions>();
-                }
+                ref var triggerEnterCollisions =
+                    ref entity.GetComponent<PhysicBodyPathTracerComponent>(out var hasTriggerEnterCollisions);
+
+                triggerEnterCollisions.QueryHits.Clear();
             }
+
             Profiler.EndSample();
         }
     }
